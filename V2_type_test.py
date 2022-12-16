@@ -1,4 +1,3 @@
-
 import curses 
 from curses import wrapper
 import time
@@ -11,13 +10,13 @@ def wpm_test_menu(stdscr):
     stdscr.addstr("Welcome to speed typing test\n")
     stdscr.refresh()
 
-    select_lvl(stdscr)
+    filename = select_lvl(stdscr)
 
-    wpm_test(stdscr)
+    wpm_test(stdscr, filename)
 
 
-def wpm_test(stdscr):
-    target_text = load_text(stdscr)
+def wpm_test(stdscr, filename):
+    target_text = load_text(stdscr, filename)
     current_text = []
     wpm = 0
     start_time = time.time()
@@ -56,7 +55,7 @@ def wpm_test(stdscr):
     stdscr.addstr(2, 0, "You completed the text! Press any key to continue...")
     key = stdscr.getkey()
 
-def load_text(stdscr):
+def load_text(stdscr, filename):
     with open(filename, "r") as f:
         lines = f.readlines()
         return random.choice(lines).strip()
@@ -105,6 +104,7 @@ def view_results(stdscr):
 
     # Wait for the user to press a key before returning to the main menu
     stdscr.addstr("\n\nPress any key to return to the main menu...")
+    
     key = stdscr.getkey()
 
 
@@ -137,4 +137,3 @@ def main(stdscr):
             break
 
 wrapper(main)
-
